@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 style="text-align: center;">Dashboard Overview</h2>
+<div style="display: flex; gap: 40px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        <canvas id="categoryPieChart"></canvas>
+    </div>
+    <div style="flex: 1; min-width: 300px; margin-top: 150px;">
+        <canvas id="userBarChart" width="300" height="200"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='admin_dashboard.js') }}"></script>
+
+{% endblock %}

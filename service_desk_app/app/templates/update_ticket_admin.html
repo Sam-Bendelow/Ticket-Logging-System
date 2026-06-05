@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Update Ticket #{{ ticket.id }}</h2>
+<form method="POST" onsubmit="return confirm('Are you sure you want to update this ticket?')">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.title.label }}<br>
+        {{ form.title(size=40) }}
+    </div>
+
+    <div class="form-group">
+        {{ form.description.label }}<br>
+        {{ form.description(rows=4, cols=40) }}
+    </div>
+
+    <div class="form-group">
+        {{ form.category.label }}<br>
+        {{ form.category() }}
+    </div>
+
+    <div class="form-group">
+        {{ form.priority.label }}<br>
+        {{ form.priority() }}
+    </div>
+
+    {% if current_user.is_admin %}
+    <div class="form-group">
+        {{ form.status.label}}<br>
+        {{ form.status() }}
+    </div>
+    {% else %}
+    <div class="form-group">
+        {{ form.status.label }}<br>
+        <input type="text" value="{{ form.status.data }}" readonly>
+    </div>
+    {% endif %}
+
+    <h3>Notes</h3>
+    {% for note in ticket.notes %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <strong>{{ note.timestamp.strftime('%Y-%m-%d %H:%M') }}</strong><br>
+            {{ note.content }}
+        </div>
+    {% else %}
+        <p>No additional comments</p>
+    {% endfor %}
+
+    <div>
+        {{ form.notes.label }}<br>
+        {{ form.notes(rows=3, cols=40) }}
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button type="submit" class="btn-action">Update</button>
+        <button type="button" class="btn-action" onclick="if (confirm('Are you sure you want to cancel updating this ticket?')) window.history.back();">Cancel</button>
+    </div>
+</form>
+{% endblock %}

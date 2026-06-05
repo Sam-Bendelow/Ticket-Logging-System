@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit User</h2>
+<form method="POST" onsubmit="return validateAndConfirm()">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="{{ user.email }}" required><br><br>
+
+    <label for="password">New Password:</label>
+    <input type="password" id="new-password" name="password" placeholder="Leave blank to keep current password"><br><br>
+
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter new password"><br><br>
+    
+    <div class="button-container">
+        <button type="submit" class="save-button">Save Changes</button>
+        <a href="{{ url_for('admin.all_users') }}" class="cancel-button">Cancel</a>
+    </div>
+</form>
+
+<script src="{{ url_for('static', filename='password_validation.js') }}"></script>
+
+<script>
+    function validateAndConfirm() {
+        const isValid = validateUserForm('email', 'new-password', 'confirm-password');
+        if (!isValid) return false;
+
+        return confirm("Are you sure you want to make these changes?")
+    }
+</script>
+{% endblock %}

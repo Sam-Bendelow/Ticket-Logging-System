@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Tickets</h2>
+
+{% for status in ['Open', 'In Progress', 'Resolved'] %}
+    <h3>{{ status }} Tickets</h3>
+    {% set filtered_tickets = tickets | selectattr("status", "equalto", status) | list %}
+    {% if filtered_tickets %}
+        <div class="ticket-table-container">
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in filtered_tickets %}
+                       <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.title }}</td>
+                            <td>{{ ticket.category }}</td>
+                            <td>{{ ticket.priority }}</td>
+                            <td>{{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <div class="button-group">
+                                    <a href="{{ url_for('user.view_ticket', ticket_id=ticket.id) }}">
+                                        <button type="button", class="btn-action">View</button>
+                                    </a>
+                                    <a href="{{ url_for('user.update_ticket', ticket_id=ticket.id) }}">
+                                        <button type="button" class="btn-action">Update</button>
+                                    </a>
+                                </div>
+                            </td>
+                       </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}        
+        {% if status == 'Open' %}
+            <p>There are currently no open tickets.</p>
+        {% elif status == 'In Progress' %}
+            <p>There are currently no tickets in progress.</p>
+        {% else %}
+            <p>There are currently no resolved tickets.</p>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% endblock %}

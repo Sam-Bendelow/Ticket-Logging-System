@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Desk App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="menu-bar top-bar">
+        <div class="menu-options">
+            <ul>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role != 'admin' %}
+                        <li><a href="{{ url_for('user.dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('user.create_ticket') }}">Create Ticket</a></li>
+                    {% endif %}
+                    {% if current_user.role == 'admin' %}
+                        <li><a href="{{ url_for('admin.admin_dashboard') }}">Admin Dashboard</a></li>
+                        <li><a href="{{ url_for('admin.all_tickets') }}">All Tickets</a></li>
+                        <li><a href="{{ url_for('admin.all_users') }}">All Users</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <div class="logout-button">
+            <a href="{{ url_for('auth.logout') }}" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    {% if not login_page and not register_page and not new_user_page %}
+    <div class="container">
+    {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

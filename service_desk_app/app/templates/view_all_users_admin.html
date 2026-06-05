@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>All Users</h2>
+<div class="user-table-container">
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.role == 'admin' %}
+                        Admin
+                    {% else %}
+                        Standard User
+                    {% endif %}
+                </td>
+                <td class="actions-cell">
+
+                    <div class="button-group">
+                        <a href="{{ url_for('admin.edit_user', user_id=user.id) }}">
+                        <button type="button" class="btn-action">Edit</button>
+                        </a>
+                        <form method="POST" action="{{ url_for('admin.delete_user', user_id=user.id) }}" onsubmit="return confirm('Are you sure you want to delete this user?');" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                            <button type="submit" class="btn-action">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            {% else %}
+            <tr><td colspan="4">No users found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="create-user-button-container">
+        <a href="{{ url_for('admin.create_user') }}">
+            <button type="button" class="btn-create-user">Create User</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
