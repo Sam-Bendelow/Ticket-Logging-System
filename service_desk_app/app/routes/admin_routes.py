@@ -153,6 +153,13 @@ def delete_user(user_id):
 @admin_required
 def create_user():
     form = RegistrationForm()
+
+    form.role.choices = [
+        ('user', 'Standard User'),
+        ('analyst', 'Analyst'),
+        ('admin', 'Admin')
+    ]
+    
     if form.validate_on_submit():
         new_user = User(
             email=form.email.data,
