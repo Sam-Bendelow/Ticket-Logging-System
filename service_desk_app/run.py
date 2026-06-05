@@ -8,7 +8,7 @@ migrate = Migrate(application, db)
 from service_desk_app.app.models import User, Ticket, Note
 
 with application.app_context():
-    db-create_all()
+    db.create_all()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
