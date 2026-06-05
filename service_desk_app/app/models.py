@@ -14,6 +14,12 @@ class User(UserMixin, db.Model):
 
     tickets = db.relationship('Ticket', backref='user', cascade='all, delete-orphan')
 
+    assigned_tickets = db.relationship(
+        'Ticket',
+        foreign_keys='Ticket.assigned_to',
+        backref='assigned_user'
+    )
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -33,6 +39,7 @@ class Ticket(db.Model):
     priority = db.Column(db.String(20), nullable=False)
     status = db.Column(db.String(20), default='Open')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    assigned_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     notes = db.relationship('Note', back_populates='ticket', cascade='all, delete-orphan', order_by='Note.timestamp.desc()')
