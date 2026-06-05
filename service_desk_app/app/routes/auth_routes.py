@@ -95,6 +95,8 @@ def login():
         # Redirect user based on role
         if user.role == 'admin':
             return redirect(url_for('admin.admin_dashboard'))
+        elif user.role == 'analyst':
+            return redirect(url_for('analyst.analyst_dashboard'))
         else:
             return redirect(url_for('user.dashboard'))
     return render_template('login.html', form=form)
