@@ -12,7 +12,12 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     role = db.Column(db.String(5), nullable=False)
 
-    tickets = db.relationship('Ticket', backref='user', cascade='all, delete-orphan')
+    tickets = db.relationship(
+        'Ticket',
+        foreign_keys='Ticket.user_id',
+        backref='user',
+        cascade='all, delete-orphan'
+    )
 
     assigned_tickets = db.relationship(
         'Ticket',

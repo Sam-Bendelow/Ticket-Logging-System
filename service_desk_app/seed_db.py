@@ -1,5 +1,5 @@
-from app import app, db
-from app.models import User, Ticket
+from service_desk_app.app import app, db
+from service_desk_app.app.models import User, Ticket
 import random
 from datetime import datetime, timedelta
 
@@ -10,16 +10,19 @@ with app.app_context():
 
     # Create users from a list of predefined emails and roles
     users = [
-        User(email='Adam@microsoft.com', role='Standard User'),
-        User(email='Becky@microsoft.com', role='Standard User'),
-        User(email='Charlie@microsoft.com', role='Standard User'),
-        User(email='Danny@microsoft.com', role='Standard User'),
-        User(email='Elvis@microsoft.com', role='Standard User'),
-        User(email='Francesca@microsoft.com', role='Standard User'),
-        User(email='George@microsoft.com', role='Standard User'),
-        User(email='Hannah@microsoft.com', role='Standard User'),
-        User(email='admin1@microsoft.com', role='admin'),
-        User(email='admin2@microsoft.com', role='admin')
+        User(email='Adam@microsoft.com', role='user'),
+        User(email='Becky@microsoft.com', role='user'),
+        User(email='Charlie@microsoft.com', role='user'),
+        User(email='Danny@microsoft.com', role='user'),
+        User(email='Elvis@microsoft.com', role='user'),
+        User(email='Francesca@microsoft.com', role='user'),
+        User(email='George@microsoft.com', role='user'),
+        User(email='Hannah@microsoft.com', role='user'),
+        User(email='Analyst1@microsoft.com', role='analyst'),
+        User(email='Analyst2@microsoft.com', role='analyst'),
+        User(email='Analyst3@microsoft.com', role='analyst'),
+        User(email='Admin1@microsoft.com', role='admin'),
+        User(email='Admin2@microsoft.com', role='admin')
     ]
 
     # Sets a standardised password for all users
@@ -83,7 +86,7 @@ with app.app_context():
 
     # Generate sample tickets for standard users only
     all_tickets = []
-    for user in [u for u in users if u.role == 'Standard User']:
+    for user in [u for u in users if u.role == 'user']:
         for _ in range(random.randint(1, 2)):
             days_ago = random.randint(0, 60)
             random_date = datetime.now() - timedelta(days=days_ago, hours=random.randint(0, 23), minutes=random.randint(0, 59))
@@ -100,7 +103,8 @@ with app.app_context():
                 priority=random.choice(priorities),
                 status=random.choice(statuses),
                 created_at=random_date,
-                user_id=user.id
+                user_id=user.id,
+                assigned_to=random.choice([u.id for u in users if u.role == 'analyst'])
             )
             all_tickets.append(ticket)
 
