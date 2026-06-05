@@ -20,10 +20,12 @@ login_manager.login_view = 'auth.login'
 from service_desk_app.app.routes.auth_routes import auth_bp
 from service_desk_app.app.routes.user_routes import user_bp
 from service_desk_app.app.routes.admin_routes import admin_bp
+from service_desk_app.app.routes.auth_routes import analyst_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(analyst_bp)
 
 # Imports models ensuring they are registered with SQLAlchemy
 from service_desk_app.app import models
