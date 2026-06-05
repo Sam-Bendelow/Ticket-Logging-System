@@ -5,6 +5,7 @@ body {
     background-color:#f4f4f4;
     margin:0;
     padding:0;
+    overflow-x: hidden;
 }
 /* Container Styles */
 .container {
@@ -14,8 +15,6 @@ body {
     background-color:white;
     box-shadow:0 0 10px rgba(0,0,0,0.1);
     margin-top:20px;
-    width:100%;
-    max-width:1600px;
 }
 /* Navigation Menu Bar */
 .menu-bar {
