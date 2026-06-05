@@ -1,9 +1,9 @@
 import os
 from flask import Blueprint, render_template, redirect, url_for, flash, current_app, jsonify, request
 from flask_login import login_user, logout_user, current_user, login_required
-from app import db, login_manager, csrf
-from app.models import User
-from app.forms import RegistrationForm, LoginForm
+from service_desk_app.app import db, login_manager, csrf
+from service_desk_app.app.models import User
+from service_desk_app.app.forms import RegistrationForm, LoginForm
 from wtforms.validators import Email, ValidationError
 
 # Authentication-related routes blueprint

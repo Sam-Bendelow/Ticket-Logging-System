@@ -17,9 +17,9 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'auth.login'
 
 # Register blueprints for route organisation
-from app.routes.auth_routes import auth_bp
-from app.routes.user_routes import user_bp
-from app.routes.admin_routes import admin_bp
+from service_desk_app.app.routes.auth_routes import auth_bp
+from service_desk_app.app.routes.user_routes import user_bp
+from service_desk_app.app.routes.admin_routes import admin_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(user_bp)

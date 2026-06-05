@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from datetime import datetime
-from app import db
-from app.models import Ticket, Note
-from app.forms import TicketForm
+from service_desk_app.app import db
+from service_desk_app.app.models import Ticket, Note
+from service_desk_app.app.forms import TicketForm
 
 user_bp = Blueprint('user', __name__)
 
