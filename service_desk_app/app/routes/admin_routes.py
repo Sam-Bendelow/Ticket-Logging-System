@@ -14,11 +14,17 @@ def admin_required(f):
     def decorated_function(*args, **kwargs):
         if current_user.role != 'admin':
             flash("Administrator access is required.", "danger")
-            return redirect(url_for('user.dashboard'))
+
+            if current_user.role == 'analyst':
+                return redirect(url_for('analyst.analyst_dashboard'))
+            
+            else:
+                return redirect(url_for('user.dashboard'))
+
         return f(*args, **kwargs)
     return decorated_function
 
-# Admin dashbaord route
+# Admin dashboard route
 @admin_bp.route('/admin_dashboard')
 @login_required
 @admin_required
@@ -61,8 +67,16 @@ def all_users():
 # Admin view specific ticket route
 @admin_bp.route('/view_ticket/<int:ticket_id>')
 @login_required
-@admin_required
 def view_ticket(ticket_id):
+
+    if current_user.role not in ['admin', 'analyst']:
+        flash("You do not have permission to view this ticket.", "danger")
+
+    if current_user.role == 'analyst':
+        return redirect(url_for('analyst.analyst_dashboard'))
+    else:
+        return redirect(url_for('user.dashboard'))
+
     ticket = Ticket.query.get_or_404(ticket_id)
     return render_template('view_ticket.html', ticket=ticket)
 
@@ -82,8 +96,16 @@ def delete_ticket(ticket_id):
 # Admin update ticket route
 @admin_bp.route('/admin/update_ticket/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def update_ticket(ticket_id):
+
+    if current_user.role not in ['admin', 'analyst']:
+        flash("You do not have permission to view this ticket.", "danger")
+
+    if current_user.role == 'analyst':
+        return redirect(url_for('analyst.analyst_dashboard'))
+    else:
+        return redirect(url_for('user.dashboard'))
+        
     ticket = Ticket.query.get_or_404(ticket_id)
     form = TicketForm()
 
@@ -159,7 +181,7 @@ def create_user():
         ('analyst', 'Analyst'),
         ('admin', 'Admin')
     ]
-    
+
     if form.validate_on_submit():
         new_user = User(
             email=form.email.data,
@@ -174,3 +196,6 @@ def create_user():
         return redirect(url_for('admin.all_users'))
 
     return render_template('create_user.html', form=form)
+
+
+# Admin or Analyst check

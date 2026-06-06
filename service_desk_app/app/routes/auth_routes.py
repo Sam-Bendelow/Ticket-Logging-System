@@ -18,7 +18,7 @@ def load_user(user_id):
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('user_dashboard'))
+        return redirect(url_for('user.dashboard'))
     
     form = RegistrationForm()
 
@@ -115,6 +115,8 @@ def home():
     if current_user.is_authenticated:
         if current_user.role == 'admin':
             return redirect(url_for('admin.admin_dashboard'))
+        if current_user.role == 'analyst':
+            return redirect(url_for('analyst.analyst_dashboard'))
         else:
             return redirect(url_for('user.dashboard'))
     return redirect(url_for('auth.login'))
