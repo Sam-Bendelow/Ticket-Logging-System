@@ -6,17 +6,23 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     
     <label for="email">Email:</label>
-    <input type="email" name="email" value="{{ user.email }}" required><br><br>
+    <input type="email" name="email" value="{{ user.email }}" required {% if is_view_only %}disabled{% endif %}><br><br>
 
     <label for="password">New Password:</label>
-    <input type="password" id="new-password" name="password" placeholder="Leave blank to keep current password"><br><br>
+    <input type="password" id="new-password" name="password" placeholder="Leave blank to keep current password" {% if is_view_only %}disabled{% endif %}><br><br>
 
     <label for="confirm-password">Confirm Password:</label>
-    <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter new password"><br><br>
+    <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter new password" {% if is_view_only %}disabled{% endif %}><br><br>
     
     <div class="button-container">
-        <button type="submit" class="save-button">Save Changes</button>
-        <a href="{{ url_for('admin.all_users') }}" class="cancel-button">Cancel</a>
+        <button type="submit" class="save-button" {% if is_view_only %}disabled{% endif %}>Save Changes</button>
+        <a href="
+        {% if current_user.role == 'analyst' %}
+            {{ url_for('analyst.analyst_all_users') }}
+        {% else %}
+            {{ url_for('admin.all_users') }}
+        {% endif %}
+        " class="cancel-button">Cancel</a>
     </div>
 </form>
 

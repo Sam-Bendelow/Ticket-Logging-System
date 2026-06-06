@@ -142,11 +142,21 @@ def update_ticket(ticket_id):
 # Admin edit user details route
 @admin_bp.route('/admin/edit_user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def edit_user(user_id):
+
+    if current_user.role not in ['admin', 'analyst']:
+        flash("You do not have permission to access this page.", "danger")
+        return redirect(url_for('user.dashboard'))
+
     user = User.query.get_or_404(user_id)
 
-    if request.method == 'POST':
+    if current_user.role == 'analyst' and user.role == 'admin':
+        flash("Only administrators can edit administrator accounts.", "danger")
+        return redirect(url_for('analyst.analyst_all_users'))
+
+    is_view_only = request.args.get('view') == 'true'
+
+    if request.method == 'POST' and not is_view_only:
         new_email = request.form.get('email')
         new_password = request.form.get('password')
 
@@ -157,9 +167,13 @@ def edit_user(user_id):
 
         db.session.commit()
         flash('User details updated successfully.', 'success')
-        return redirect(url_for('admin.all_users'))
+        if current_user.role == 'analyst':
+            return redirect(url_for('analyst.analyst_all_users'))
+        else:
+            return redirect(url_for('admin.all_users'))
 
-    return render_template('edit_user_admin.html', user=user)
+
+    return render_template('edit_user_admin.html', user=user, is_view_only=is_view_only)
 
 
 # Admin delete user route
@@ -220,6 +234,3 @@ def create_user():
             return redirect(url_for('admin.all_users'))
 
     return render_template('create_user.html', form=form)
-
-
-# Admin or Analyst check
