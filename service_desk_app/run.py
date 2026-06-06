@@ -8,7 +8,6 @@ migrate = Migrate(application, db)
 from service_desk_app.app.models import User, Ticket, Note
 
 with application.app_context():
-    db.drop_all()
     db.create_all()
 
 if __name__ == '__main__':
