@@ -177,8 +177,12 @@ def delete_user(user_id):
 # Admin create new user route
 @admin_bp.route('/create_user', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def create_user():
+
+    if current_user.role not in ['admin', 'analyst']:
+        flash("You do not have permission to access this page.", "danger")
+        return redirect(url_for('user.dashboard'))
+
     form = RegistrationForm()
 
     if current_user.role == 'admin':
@@ -208,7 +212,12 @@ def create_user():
         db.session.commit()
 
         flash('New user has been successfully created!', 'success')
-        return redirect(url_for('admin.all_users'))
+
+        
+        if current_user.role == 'analyst':
+            return redirect(url_for('analyst.analyst_all_users'))
+        else:
+            return redirect(url_for('admin.all_users'))
 
     return render_template('create_user.html', form=form)
 
