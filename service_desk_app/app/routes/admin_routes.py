@@ -105,7 +105,7 @@ def update_ticket(ticket_id):
         return redirect(url_for('analyst.analyst_dashboard'))
     else:
         return redirect(url_for('user.dashboard'))
-        
+
     ticket = Ticket.query.get_or_404(ticket_id)
     form = TicketForm()
 
@@ -176,13 +176,23 @@ def delete_user(user_id):
 def create_user():
     form = RegistrationForm()
 
-    form.role.choices = [
-        ('user', 'Standard User'),
-        ('analyst', 'Analyst'),
-        ('admin', 'Admin')
-    ]
+    if current_user.role == 'admin':
+        form.role.choices = [
+            ('user', 'Standard User'),
+            ('analyst', 'Analyst'),
+            ('admin', 'Admin')
+        ]
+    elif current_user.role == 'analyst':
+        form.role.choices = [
+            ('user', 'Standard User')
+        ]
 
     if form.validate_on_submit():
+
+        if current_user.role == 'analyst' and form.role.data != 'user':
+            flash('You do not have permission to assign this role.', 'danger')
+            return redirect(url_for('admin.create_user'))
+
         new_user = User(
             email=form.email.data,
             role=form.role.data

@@ -1,29 +1,52 @@
-
 {% extends "base.html" %}
 
 {% block content %}
-
 <h2>All Users</h2>
-
 <div class="user-table-container">
     <table class="user-table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>User ID</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+            {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-            </tr>
-        {% endfor %}
+                <td>
+                    {% if user.role == 'admin' %}
+                        Admin
+                    {% elif user.role == 'analyst' %}
+                        Analyst
+                    {% elif user.role == 'user' %}
+                        Standard User
+                    {% endif %}
+                </td>
+                <td class="actions-cell">
+
+                    <div class="button-group">
+                        <a href="{{ url_for('admin.view_user', user_id=user.id) }}">
+                        <button type="button" class="btn-action">View</button>
+                        </a>
+
+                        <a href="{{ url_for('admin.view_user', user_id=user.id) }}">
+                        <button type="button" class="btn-action">Edit</button>
+                        </a>
+                    </div>
+                </td>
+            {% else %}
+            <tr><td colspan="4">No users found.</td></tr>
+            {% endfor %}
         </tbody>
     </table>
+    <div class="create-user-button-container">
+        <a href="{{ url_for('admin.create_user') }}">
+            <button type="button" class="btn-create-user">Create User</button>
+        </a>
+    </div>
 </div>
-
 {% endblock %}
