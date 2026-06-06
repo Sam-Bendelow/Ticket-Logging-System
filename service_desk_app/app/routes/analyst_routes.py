@@ -24,7 +24,7 @@ def my_queue():
 
     tickets = Ticket.query.filter_by(assigned_to=current_user.id).all()
 
-    return render_template('analyst_queue.html', tickets=tickets)
+    return render_template('my_queue_analyst.html', tickets=tickets)
 
 # Analyst view all tickets route
 @analyst_bp.route('/analyst_all_tickets')
@@ -35,7 +35,7 @@ def analyst_all_tickets():
 
     tickets = Ticket.query.all()
 
-    return render_template('analyst_all_tickets.html', tickets=tickets)
+    return render_template('view_all_tickets_analyst.html', tickets=tickets)
 
 # Analyst view all users
 @analyst_bp.route('/analyst/users')
