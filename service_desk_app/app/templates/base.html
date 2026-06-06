@@ -10,15 +10,25 @@
         <div class="menu-options">
             <ul>
                 {% if current_user.is_authenticated %}
-                    {% if current_user.role != 'admin' %}
+
+                    {% if current_user.role == 'user' %}
                         <li><a href="{{ url_for('user.dashboard') }}">Dashboard</a></li>
                         <li><a href="{{ url_for('user.create_ticket') }}">Create Ticket</a></li>
                     {% endif %}
+
                     {% if current_user.role == 'admin' %}
                         <li><a href="{{ url_for('admin.admin_dashboard') }}">Admin Dashboard</a></li>
                         <li><a href="{{ url_for('admin.all_tickets') }}">All Tickets</a></li>
                         <li><a href="{{ url_for('admin.all_users') }}">All Users</a></li>
                     {% endif %}
+
+                    {% if current_user.role == 'analyst' %}
+                        <li><a href="{{ url_for('analyst.analyst_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('analyst.my_queue') }}">My Queue</a></li>
+                        <li><a href="{{ url_for('analyst.analyst_all_tickets') }}">All Tickets</a></li>
+                        <li><a href="{{ url_for('analyst.analyst_all_users') }}">All Users</a></li>
+                    {% endif %}
+
                 {% else %}
                     <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                     <li><a href="{{ url_for('auth.register') }}">Register</a></li>

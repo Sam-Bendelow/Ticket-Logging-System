@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
 from flask_login import login_required, current_user
-from service_desk_app.app.models import Ticket
+from service_desk_app.app.models import Ticket, User
 
 analyst_bp = Blueprint('analyst', __name__)
 
@@ -36,3 +36,13 @@ def analyst_all_tickets():
     tickets = Ticket.query.all()
 
     return render_template('analyst_all_tickets.html', tickets=tickets)
+
+# Analyst view all users
+@analyst_bp.route('/analyst/users')
+@login_required
+def analyst_all_users():
+    if current_user.role != 'analyst':
+        abort(403)
+    
+    users = User.query.all()
+    return render_template('view_all_users_analyst.html', users=users)
