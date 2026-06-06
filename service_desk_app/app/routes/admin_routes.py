@@ -69,15 +69,12 @@ def all_users():
 @login_required
 def view_ticket(ticket_id):
 
-    if current_user.role not in ['admin', 'analyst']:
-        flash("You do not have permission to view this ticket.", "danger")
-
-    if current_user.role == 'analyst':
-        return redirect(url_for('analyst.analyst_dashboard'))
-    else:
-        return redirect(url_for('user.dashboard'))
-
     ticket = Ticket.query.get_or_404(ticket_id)
+
+    if current_user.role == 'user' and ticket.user_id != current_user.id:
+        flash("You do not have permission to view this ticket.", "danger")
+        return redirect(url_for('user_dashboard'))
+    
     return render_template('view_ticket.html', ticket=ticket)
 
 
