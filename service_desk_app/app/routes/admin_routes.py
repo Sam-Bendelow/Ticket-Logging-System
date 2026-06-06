@@ -124,6 +124,11 @@ def update_ticket(ticket_id):
         flash('Ticket has been updated.', 'success')
         return redirect(url_for('admin.all_tickets'))
 
+        if current_user.role == 'analyst':
+            return redirect(url_for('analyst.analyst_all_tickets'))
+        else:
+            return redirect(url_for('admin.all_tickets'))
+
     if request.method == 'GET':
         form.title.data = ticket.title
         form.description.data = ticket.description
