@@ -83,7 +83,7 @@ def view_ticket(ticket_id):
             flash("You do not have permission to view this ticket.", "danger")
             return redirect(url_for('user.dashboard'))
 
-    return render_template('view_ticket.html', ticket=ticket)
+    return render_template('view_ticket.html', ticket=ticket, form=form)
 
 
 # Admin delete ticket route
