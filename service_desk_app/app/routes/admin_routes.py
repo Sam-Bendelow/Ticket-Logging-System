@@ -70,6 +70,8 @@ def all_users():
 def view_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
+
+    print("ROLE:", current_user.role)
  
     if current_user.role == 'user':
         if ticket.user_id != current_user.id:
