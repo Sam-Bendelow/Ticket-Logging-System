@@ -92,15 +92,16 @@ def delete_ticket(ticket_id):
 
 
 # Admin update ticket route
-@admin_bp.route('/admin/update_ticket/<int:ticket_id>', methods=['GET', 'POST'])
+@admin_bp.route('/tickets/update/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def update_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
     
-    if current_user.role == 'user' and ticket.user_id != current_user.id:
-        flash("You do not have permission to update this ticket.", "danger")
-        return redirect(url_for('user.dashboard'))
+    if current_user.role == 'user'
+        if ticket.user_id != current_user.id:
+            flash("You do not have permission to update this ticket.", "danger")
+            return redirect(url_for('user.dashboard'))
 
     form = TicketForm()
 
