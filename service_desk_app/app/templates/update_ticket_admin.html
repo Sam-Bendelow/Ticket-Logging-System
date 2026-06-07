@@ -33,7 +33,7 @@
     {% else %}
     <div class="form-group">
         {{ form.status.label }}<br>
-        <input type="text" value="{{ form.status.data }}" readonly>
+        {{ form.status(readonly=True) }}
     </div>
     {% endif %}
 
