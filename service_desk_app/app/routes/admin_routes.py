@@ -71,11 +71,19 @@ def view_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
 
-    if current_user.role == 'user' and ticket.user_id != current_user.id:
-        flash("You do not have permission to view this ticket.", "danger")
-        return redirect(url_for('user.dashboard'))
     
-    return render_template('view_ticket.html', ticket=ticket)
+    if ticket.user_id == current_user.id:
+        return render_template('view_ticket.html', ticket=ticket)
+
+    if ticket.assigned_to == current_user.id:
+        return render_template('view_ticket.html', ticket=ticket)
+
+    if current_user.role == 'admin':
+        return render_template('view_ticket.html', ticket=ticket)
+
+    flash("You do not have permission to view this ticket.", "danger")
+    return redirect(url_for('user.dashboard'))
+
 
 
 # Admin delete ticket route

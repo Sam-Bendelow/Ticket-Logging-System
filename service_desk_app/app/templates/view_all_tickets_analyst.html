@@ -32,8 +32,9 @@
                             <button type="button" class="btn-action">View</button>
                         </a>
                         
-                        <a href="{{ url_for('admin.update_ticket', ticket_id=ticket.id) }}"></a>
-                            <button type="submit" class="btn-action">Update</button>
+                        <a href="{{ url_for('admin.update_ticket', ticket_id=ticket.id) }}">
+                            <button type="button" class="btn-action">Update</button>
+                        </a>
                         </form>
                     </div>
                 </td>
