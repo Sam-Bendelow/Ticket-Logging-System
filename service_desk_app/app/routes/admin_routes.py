@@ -71,7 +71,11 @@ def view_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
 
-    print("ROLE:", current_user.role)
+    if current_user.role == 'admin':
+        return render_template('view_ticket.html', ticket=ticket)
+    
+    if current_user.role == 'analyst':
+        return render_template('view_ticket.html', ticket=ticket)
  
     if current_user.role == 'user':
         if ticket.user_id != current_user.id:
