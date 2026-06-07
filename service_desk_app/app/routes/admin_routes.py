@@ -70,6 +70,7 @@ def all_users():
 def view_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
+    form = TicketForm(obj=ticket)
 
     if current_user.role == 'admin':
         return render_template('view_ticket.html', ticket=ticket)
