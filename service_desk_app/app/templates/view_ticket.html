@@ -2,54 +2,51 @@
 {% block content %}
 
 <h2>View Ticket #{{ ticket.id }}</h2>
-<form>
-
-    <div class="form-group">
-        {{ form.title.label }}<br>
-        {{ form.title(size=40, readonly=True, disabled=True) }}
-    </div>
-
-    <div class="form-group">
-        {{ form.description.label }}<br>
-        {{ form.description(rows=4, cols=40, readonly=True, disabled=True) }}
-    </div>
-
-    <div class="form-group">
-        {{ form.category.label }}<br>
-        {{ form.category(disabled=True) }}
-    </div>
-
-    <div class="form-group">
-        {{ form.priority.label }}<br>
-        {{ form.priority(disabled=True) }}
-    </div>
-
-    <div class="form-group">
-        {{ form.status.label }}<br>
-        {{ form.status(disabled=True) }}
-    </div>
 
     
-    <h3>Notes</h3>
-    {% if ticket.notes %}
-        {% for note in ticket.notes %}
-            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                <strong>{{ note.timestamp.strftime('%Y-%m-%d %H:%M') }}</strong><br>
-                {{ note.content }}
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No additional notes available</p>
-    {% endif %}
-
-    <div style="text-align: right; margin-top: 20px;">
-        <a class="btn-action"
-            href="{% if current_user.is_admin %}{{ url_for('admin.admin_dashboard') }}{% else %}{{ url_for('user.dashboard') }}{% endif %}"
-            onclick="return confirm('Are you sure you want to return to the dashboard?');">
-            Back to Dashboard
-        </a>
+<div class="form-group">
+    <label>Title</label><br>
+    <input type="text" value="{{ ticket.title }}" readonly>
 </div>
 
-</form>
+<div class="form-group">
+    <label>Description</label><br>
+    <textarea rows="4" cols="40" readonly>{{ ticket.description }}</textarea>
+</div>
+
+<div class="form-group">
+    <label>Category</label><br>
+    <input type="text" value="{{ ticket.category }}" readonly>
+</div>
+
+<div class="form-group">
+    <label>Priority</label><br>
+    <input type="text" value="{{ ticket.priority }}" readonly>
+</div>
+
+<div class="form-group">
+    <label>Status</label><br>
+    <input type="text" value="{{ ticket.status }}" readonly>
+</div>
+
+<h3>Notes</h3>
+{% if ticket.notes %}
+    {% for note in ticket.notes %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <strong>{{ note.timestamp.strftime('%Y-%m-%d %H:%M') }}</strong><br>
+            {{ note.content }}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No additional notes available</p>
+{% endif %}
+
+<div style="text-align: right; margin-top: 20px;">
+    <a class="btn-action"
+       href="{% if current_user.is_admin %}{{ url_for('admin.admin_dashboard') }}{% elif current_user.role == 'analyst' %}{{ url_for('analyst.analyst_all_tickets') }}{% else %}{{ url_for('user.dashboard') }}{% endif %}">
+        Back
+    </a>
+</div>
+
 
 {% endblock %}
