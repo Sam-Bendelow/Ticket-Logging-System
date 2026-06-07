@@ -98,7 +98,7 @@ def update_ticket(ticket_id):
 
     ticket = Ticket.query.get_or_404(ticket_id)
     
-    if current_user.role == 'user'
+    if current_user.role == 'user':
         if ticket.user_id != current_user.id:
             flash("You do not have permission to update this ticket.", "danger")
             return redirect(url_for('user.dashboard'))
