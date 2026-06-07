@@ -29,7 +29,7 @@
                 <td class="actions-cell">
                     <div class="button-group">
                         <a href="{{ url_for('admin.view_ticket', ticket_id=ticket.id) }}" class="btn-action">
-                            View
+                            <button type="button" class="btn-action">View</button>
                         </a>
                         
                         <a href="{{ url_for('admin.update_ticket', ticket_id=ticket.id) }}">
