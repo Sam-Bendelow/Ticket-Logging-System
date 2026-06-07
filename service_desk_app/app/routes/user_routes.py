@@ -34,7 +34,7 @@ def create_ticket():
         return redirect(url_for('user.dashboard'))
     return render_template('create_ticket.html', form=form)
 
-@user_bp.route('/view_ticket/<int:ticket_id>')
+@user_bp.route('/user/view_ticket/<int:ticket_id>')
 @login_required
 def view_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
