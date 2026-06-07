@@ -95,15 +95,12 @@ def delete_ticket(ticket_id):
 @login_required
 def update_ticket(ticket_id):
 
-    if current_user.role not in ['admin', 'analyst']:
-        flash("You do not have permission to view this ticket.", "danger")
-
-    if current_user.role == 'analyst':
-        return redirect(url_for('analyst.analyst_dashboard'))
-    else:
+    ticket = Ticket.query.get_or_404(ticket_id)
+    
+    if current_user.role == 'user' and ticket.user_id != current_user.id:
+        flash("You do not have permission to update this ticket.", "danger")
         return redirect(url_for('user.dashboard'))
 
-    ticket = Ticket.query.get_or_404(ticket_id)
     form = TicketForm()
 
     if form.validate_on_submit():
@@ -119,7 +116,6 @@ def update_ticket(ticket_id):
 
         db.session.commit()
         flash('Ticket has been updated.', 'success')
-        return redirect(url_for('admin.all_tickets'))
 
         if current_user.role == 'analyst':
             return redirect(url_for('analyst.analyst_all_tickets'))
