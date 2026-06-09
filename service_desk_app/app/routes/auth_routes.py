@@ -78,14 +78,9 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         
-        # Checks is email is registered in database
-        if user is None:
-            flash('An account with this email address does not exist. Please register first.', 'danger')
-            return redirect(url_for('auth.login'))
-        
         # Checks password is correct
-        if not user.check_password(form.password.data):
-            flash('Password is incorrect. Please try again or sign in with another account.', 'danger')
+        if not user or user.check_password(form.password.data):
+            flash('Invalid email or password.', 'danger')
             return redirect(url_for('auth.login'))
         
         # Login user
