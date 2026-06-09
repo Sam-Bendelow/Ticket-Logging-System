@@ -78,8 +78,8 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         
-        # Checks password is correct
-        if not user or user.check_password(form.password.data):
+        # Validates user credentials using generic check to prevent account enumeration attacks
+        if not user or not user.check_password(form.password.data):
             flash('Invalid email or password.', 'danger')
             return redirect(url_for('auth.login'))
         
