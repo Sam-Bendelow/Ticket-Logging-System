@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from service_desk_app.app.models import User
 import re
 
@@ -15,7 +15,10 @@ def validate_password_complexity(form, field):
 
 # Form for user registration
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField(
+        'Email',
+        validators=[DataRequired(), Email(), Length(max=120)]
+        )
     password = PasswordField('Password', validators=[DataRequired(), validate_password_complexity])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     role = SelectField('Select Role', choices=[('user', 'Standard User')])
@@ -28,14 +31,17 @@ class RegistrationForm(FlaskForm):
 
 # Form for user login    
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired()])
+    email = StringField(
+        'Email',
+        validators=[DataRequired(), Email(), Length(max=120)]
+        )
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # Form for submitting tickets
 class TicketForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired(), Length(max=128)])
+    description = TextAreaField('Description', validators=[DataRequired(), Length(max=1000)])
     category = SelectField(
         "Category",
         choices=[

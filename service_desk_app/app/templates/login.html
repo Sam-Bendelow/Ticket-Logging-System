@@ -1,12 +1,36 @@
 {% extends "base.html" %}
 {% set login_page = True %}
+
 {% block content %}
 <div class="login-container">
     <h2>Login</h2>
+
     <form method="POST">
         {{ form.hidden_tag() }}
-        <p>{{ form.email.label }} {{ form.email() }}</p>
-        <p>{{ form.password.label }} {{ form.password() }}</p>
+
+    <!-- Email field -->
+        <p>
+            {{ form.email.label }}
+            {{ form.email() }}
+        </p>
+
+        <!-- Email validation errors -->
+        {% for error in form.email.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
+        <!-- Password field -->
+        <p>
+            {{ form.password.label }}
+            {{ form.password() }}
+        </p>
+
+        <!-- Password validation errors -->
+        {% for error in form.password.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
+        <!-- Submit button -->
         <p>{{ form.submit(class_="btn-submit") }}</p>
     </form>
 </div>

@@ -1,14 +1,45 @@
 {% extends "base.html" %}
 {% set register_page = True %}
+
 {% block content %}
 <div class="register-container">
     <h2>Register</h2>
+
     <form id="registerForm" method="POST" action="{{ url_for('auth.register') }}">
         {{ form.hidden_tag() }}
-        <p>{{ form.email.label }} {{ form.email(id="email", placeholder="Enter your email") }}</p>
-        <p>{{ form.password.label }} {{ form.password(id="password", placeholder="Enter your password") }}</p>
-        <p>{{ form.password2.label }} {{ form.password2(id="confirmPassword", placeholder="Confirm your password") }}</p>
-        <p>{{ form.role.label }}<br>{{ form.role(id="role") }}</p>
+
+        <p>
+            {{ form.email.label }}
+            {{ form.email(id="email", placeholder="Enter your email") }}
+        </p>
+
+        {% for error in form.email.errors %}
+            <span class="error-message"{{ error }}</span><br>
+        {% endfor %}
+
+        <p>
+            {{ form.password.label }}
+            {{ form.password(id="password", placeholder="Enter your password") }}
+        </p>
+
+        {% for error in form.password.errors %}
+            <span class="error-message"{{ error }}</span><br>
+        {% endfor %}
+
+        <p>
+            {{ form.password2.label }}
+            {{ form.password2(id="confirmPassword", placeholder="Confirm your password") }}
+        </p>
+
+        {% for error in form.password2.errors %}
+            <span class="error-message"{{ error }}</span><br>
+        {% endfor %}
+
+        <p>
+            {{ form.role.label }}<br>
+            {{ form.role(id="role") }}
+        </p>
+
         <p>{{ form.submit(id="realSubmit", style="display:none;") }}</p>
     </form>
 </div>

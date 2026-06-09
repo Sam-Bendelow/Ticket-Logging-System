@@ -309,3 +309,11 @@ input[disabled],textarea[disabled],select[disabled] {
     padding:0 20px;
     box-sizing:border-box;
 }
+
+/* Form Validation Errors */
+.error-message {
+    color: #d9534f;
+    font-size: 0.9em;
+    margin-top: 4px;
+    display: block;
+}
