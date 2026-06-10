@@ -35,3 +35,12 @@ __all__ = ['app', 'db', 'login_manager', 'csrf']
 @app.context_processor
 def inject_csrf_token():
     return dict(csrf_token=generate_csrf())
+
+# Handles application errors
+@app.errorhandler(500)
+def internal_error(error):
+    return "Something went wrong. Please try again later.", 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return "Page not found. Please check the url.", 404
