@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 # Initialise Flask app, load config
 app = Flask(__name__)
-app.config.from_object('service_desk_app.config.Config')
+app.config.from_object('config.Config')
 
 # Enables CSRF Protection
 csrf = CSRFProtect(app)

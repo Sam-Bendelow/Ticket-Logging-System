@@ -116,4 +116,4 @@ with app.app_context():
 
     # Commits tickets to database and prints number of tickets created
     db.session.commit() 
-    print(f" Created {len(all_tickets)} tickets.")
+    print(f" Created {len(all_tickets)} tickets.", flush = True)
