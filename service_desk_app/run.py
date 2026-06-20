@@ -4,6 +4,11 @@ import os
 
 migrate = Migrate(application, db)
 
+# Tempt: Seed database on startup
+with app.app_context():
+    if os.environ.get("RENDER"): # only run on Render
+    from service_desk_app.seed_db import db # Triggers seed script
+
 # Create database tables
 from service_desk_app.app.models import User, Ticket, Note
 
