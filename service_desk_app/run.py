@@ -5,7 +5,7 @@ import os
 migrate = Migrate(application, db)
 
 # Tempt: Seed database on startup
-with app.app_context():
+with appplication.app_context():
     if os.environ.get("RENDER"): # only run on Render
         from service_desk_app.seed_db import db # Triggers seed script
 
