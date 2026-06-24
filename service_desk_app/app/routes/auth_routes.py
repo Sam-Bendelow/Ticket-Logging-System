@@ -5,6 +5,7 @@ from service_desk_app.app import db, login_manager, csrf
 from service_desk_app.app.models import User
 from service_desk_app.app.forms import RegistrationForm, LoginForm
 from wtforms.validators import Email, ValidationError
+from sqlalchemy import func
 
 # Authentication-related routes blueprint
 auth_bp = Blueprint('auth', __name__)
@@ -27,7 +28,10 @@ def register():
 
     if form.validate_on_submit():
         # Check if email already exists
-        existing_user = User.query.filter_by(email=form.email.data).first()
+        existing_user = User.query.filter(
+            func.lower(User.email) == form.email.data.lower()
+        ).first()
+
         if existing_user:
             flash('An account already exists with this email. Please login or register with a new email.', 'danger')
             return redirect(url_for('auth.register'))
@@ -60,7 +64,9 @@ def check_email():
         email_validator (None, type('obj', (object,), {'data': email}))
         
         # Check if email already exists in database
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter(
+            func.lower(User.email) == form.email.data.lower()
+        ).first()
         return jsonify({'exists': user is not None})
     except ValidationError:
         return jsonify({'error': 'Invalid email format'}), 400
@@ -76,7 +82,9 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter(
+            func.lower(User.email) == form.email.data.lower()
+        ).first()
         
         # Validates user credentials using generic check to prevent account enumeration attacks
         if not user or not user.check_password(form.password.data):
