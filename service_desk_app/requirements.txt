@@ -8,3 +8,4 @@ email_validator
 wtforms
 Jinja2
 gunicorn
+pytest
