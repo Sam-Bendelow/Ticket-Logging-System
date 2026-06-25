@@ -9,3 +9,4 @@ wtforms
 Jinja2
 gunicorn
 pytest
+psycopg2-binary

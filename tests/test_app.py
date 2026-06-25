@@ -18,7 +18,7 @@ def test_user_creation():
     assert user.role == "analyst"
 
 
-# Test that updating a password replaces the old one
+# Tests that updating a password replaces the old one
 def test_password_change():
     user = User(email="change@test.com", role="user")
     user.set_password("password123")
