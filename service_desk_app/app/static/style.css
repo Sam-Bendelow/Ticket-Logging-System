@@ -77,7 +77,10 @@ body {
 form p {
     margin-bottom:10px;
 }
-form input,form select,form textarea,form button {
+form input,
+form select,
+form textarea,
+form button {
     font-family:Arial,sans-serif;
     width:100%;
     padding:8px;
@@ -103,7 +106,8 @@ form button:hover {
 form select {
     font-size:13px;
     padding:5px 8px;
-    max-width:170px;
+    width:100%;
+    max-width:none;
     box-sizing:border-box;
 }
 /* Login & Register Containers */
@@ -316,4 +320,20 @@ input[disabled],textarea[disabled],select[disabled] {
     font-size: 0.9em;
     margin-top: 4px;
     display: block;
+}
+
+textarea {
+    resize: none;
+}
+
+
+.form-control,
+.form-select {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
 }

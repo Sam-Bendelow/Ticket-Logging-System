@@ -57,6 +57,9 @@ def update_ticket(ticket_id):
     
     form = TicketForm(obj=ticket)
 
+    if request.method == 'GET':
+        form.notes.data = ""
+
     if form.validate_on_submit():
         ticket.title = form.title.data
         ticket.description = form.description.data

@@ -25,6 +25,7 @@ def register():
 
     print("Form submitted:", form.is_submitted())
     print("Form validated:", form.validate_on_submit())
+    print("Form errors:", form.errors)
 
     if form.validate_on_submit():
         # Check if email already exists
@@ -65,9 +66,11 @@ def check_email():
         
         # Check if email already exists in database
         user = User.query.filter(
-            func.lower(User.email) == form.email.data.lower()
+            func.lower(User.email) == email.lower()
         ).first()
+
         return jsonify({'exists': user is not None})
+
     except ValidationError:
         return jsonify({'error': 'Invalid email format'}), 400
     except Exception as e:
