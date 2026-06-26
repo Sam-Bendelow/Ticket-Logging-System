@@ -106,12 +106,18 @@ def update_ticket(ticket_id):
 
     form = TicketForm()
 
+    analysts = User.query.filter_by(role='analyst').all()
+    form.assigned_to.choices = [(0, 'Unassigned')] + [
+        (user.id, user.email) for user in analysts
+    ]
+
     if form.validate_on_submit():
         ticket.title = form.title.data
         ticket.description = form.description.data
         ticket.category = form.category.data
         ticket.priority = form.priority.data
         ticket.status = form.status.data
+        ticket.assigned.to = form.assigned_to.data if form.assigned_to.data != 0 else None
 
         if form.notes.data:
             note = Note(content=form.notes.data, ticket=ticket)
@@ -131,6 +137,7 @@ def update_ticket(ticket_id):
         form.category.data = ticket.category
         form.priority.data = ticket.priority
         form.status.data = ticket.status
+        form.assigned_to.data = ticket.assigned_to if ticket.assigned_to else 0
 
     return render_template('update_ticket_admin.html', form=form, ticket=ticket)
 

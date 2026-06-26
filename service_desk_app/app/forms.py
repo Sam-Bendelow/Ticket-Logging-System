@@ -58,4 +58,5 @@ class TicketForm(FlaskForm):
     priority = SelectField('Priority', choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')], validators=[DataRequired()])
     submit = SubmitField('Submit')
     status = SelectField('Status', choices=[('Open', 'Open'), ('In Progress', 'In Progress'), ('Resolved', 'Resolved')])
+    assigned_to = SelectField('Assigned Analyst', coerce=int)
     notes = TextAreaField('Additional Notes')

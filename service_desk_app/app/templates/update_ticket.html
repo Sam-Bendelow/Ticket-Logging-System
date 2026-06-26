@@ -43,6 +43,12 @@
         {{ form.notes.label }}<br>
         {{ form.notes(rows=3, cols=40) }}
     </div>
+
+    <div class="mb-3">
+        {{ form.assigned_to.label(class="form-label") }}
+        {{ form.assigned_to(class="form-select") }}
+    </div>
+
     
     <div style="display: flex; justify-content: space-between; margin-top: 20px">
         <button type="submit" class="btn-action">Update</button>
