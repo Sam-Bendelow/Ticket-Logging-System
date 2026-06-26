@@ -117,7 +117,7 @@ def update_ticket(ticket_id):
         ticket.category = form.category.data
         ticket.priority = form.priority.data
         ticket.status = form.status.data
-        ticket.assigned.to = form.assigned_to.data if form.assigned_to.data != 0 else None
+        ticket.assigned_to = form.assigned_to.data if form.assigned_to.data != 0 else None
 
         if form.notes.data:
             note = Note(content=form.notes.data, ticket=ticket)
