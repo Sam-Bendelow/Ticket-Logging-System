@@ -6,12 +6,6 @@
 
 <p>Welcome, {{ current_user.email }}</p>
 
-<!-- Navigation buttons -->
-<div style="margin-bottom: 20px;">
-    <a href="{{ url_for('analyst.my_queue') }}" class="btn-action">My Queue</a>
-    <a href="{{ url_for('analyst.analyst_all_tickets') }}" class="btn-action">All Tickets</a>
-</div>
-
 <!-- Summary section -->
 <div class="ticket-table-container">
     <table class="ticket-table">
