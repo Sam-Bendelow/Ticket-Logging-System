@@ -35,6 +35,17 @@
             {{ form.status(class="form-select w-100", disabled=True) }}
         </div>
     </div>
+        
+    <div class="row mb-3">
+        <div class="col-12">
+            <label class="form-label fw-bold">Assigned Analyst</label>
+            <input type="text"
+                   class="form-control"
+                   value="{% if ticket.assigned_user %}{{ ticket.assigned_user.email }}{% else %}Unassigned{% endif %}"
+                   readonly>
+        </div>
+
+    </div>
 
     <h4 class="mt-4">Notes</h4>
 
