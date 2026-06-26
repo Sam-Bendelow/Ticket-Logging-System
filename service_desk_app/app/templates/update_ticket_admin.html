@@ -37,6 +37,14 @@
     </div>
     {% endif %}
 
+    {% if current_user.role in ['admin', 'analyst'] %}
+    <div class="form-group">
+        {{ form.assigned_to.label }}<br>
+        {{ form.assigned_to() }}
+    </div>
+    {% endif %}
+
+
     <h3>Notes</h3>
     {% for note in ticket.notes %}
         <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
