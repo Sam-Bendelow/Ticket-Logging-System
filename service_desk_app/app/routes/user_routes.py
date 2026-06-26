@@ -57,6 +57,9 @@ def update_ticket(ticket_id):
     
     form = TicketForm(obj=ticket)
 
+    form.assigned_to.choices = [(0, 'Unassigned')]
+    form.assigned_to.data = 0
+
     if request.method == 'GET':
         form.notes.data = ""
 

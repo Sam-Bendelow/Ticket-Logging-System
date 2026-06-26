@@ -92,12 +92,10 @@ form button {
     color:white;
     border:none;
     cursor:pointer;
-    padding:4px 6px;
-    font-size:11px;
-    max-width:70px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    padding:10px 20px;
+    font-size:14px;
+    max-width:none;
+    white-space:normal;
     border-radius:4px;
 }
 form button:hover {
@@ -326,14 +324,17 @@ textarea {
     resize: none;
 }
 
-
 .form-control,
 .form-select {
     width: 100% !important;
     max-width: 100%;
 }
 
-
 .form-group {
     margin-bottom: 15px;
+}
+
+.update-btn {
+    width: auto !important;
+    min-width: 120px;
 }
