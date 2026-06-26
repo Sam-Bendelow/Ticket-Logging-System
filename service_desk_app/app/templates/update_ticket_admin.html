@@ -60,9 +60,16 @@
         {{ form.notes(rows=3, cols=40) }}
     </div>
 
-    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-        <button type="submit" class="btn-action">Update</button>
-        <button type="button" class="btn-action" onclick="if (confirm('Are you sure you want to cancel updating this ticket?')) window.history.back();">Cancel</button>
-    </div>
+<div class="d-flex justify-content-between mt-3">
+
+    <button type="submit" class="btn btn-primary update-btn">
+        Update
+    </button>
+
+    <button type="button" class="btn btn-primary update-btn"
+        onclick="if (confirm('Are you sure you want to cancel updating this ticket?')) window.history.back();">
+        Cancel
+    </button>
+
 </form>
 {% endblock %}
